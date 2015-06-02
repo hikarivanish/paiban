@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+
+<a href="/employee/add" th:href="@{/employee/add}">add employee</a>
+<a href="/paiban" th:href="@{/paiban}">paiban</a>
+<table>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>department</td>
+        <td>action</td>
+    </tr>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.id}">3</td>
+        <td th:text="${employee.name}">jack</td>
+        <td th:text="${employee.department.name}">taobao</td>
+        <td>
+            <a href="edit/3" th:href="@{/employee/edit/} + ${employee.id }">edit</a>
+            <a href="delete/3" th:href="@{/employee/delete/} + ${employee.id}">delete</a>
+        </td>
+    </tr>
+</table>
+<a th:if="${page > 0}" th:href="@{/employee} + '?page='+${page - 1}">pre</a>
+<a th:if="${employees.getTotalPages() > page}" th:href="@{/employee} + '?page='+${page + 1}">next</a>
+
+<div th:text="${employees.getTotalPages()}"></div>
+<div th:text="${employees.getTotalElements()}"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+package me.s4h.paiban;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * Created by hikari on 2015/6/2.
+ */
+
+@Controller
+@RequestMapping("/paiban")
+public class ArrangeController {
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String index() {
+        return "paiban";
+    }
+}
