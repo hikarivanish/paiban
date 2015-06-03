@@ -5,10 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String edit(@PathVariable Long id, String name, Long departmentId) {
+        System.out.println(id + "   " + name + "  " + departmentId);
         Employee e = employeeRepository.findOne(id);
         if (e != null) {
             e.setName(name);
@@ -41,6 +39,19 @@ public class EmployeeController {
             employeeRepository.save(e);
         }
         return "redirect:/employee";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public String edit(@RequestBody Employee empl) {
+        System.out.println(empl);
+        Employee e = employeeRepository.findOne(empl.getId());
+        if (e != null) {
+            e.setName(empl.getName());
+            e.setDepartment(departmentRepository.findOne(empl.getDepartment().getId()));
+            employeeRepository.save(e);
+        }
+        return "{\"ok\":true}";
     }
 
 
@@ -62,20 +73,27 @@ public class EmployeeController {
     }
 
 
+    /*    @RequestMapping(value = "/add", method = RequestMethod.POST)
+        public String add(String name, Long departmentId) {
+            System.out.println(departmentId);
+            employeeRepository.save(new Employee(name, departmentRepository.findOne(departmentId)));
+            return "redirect:/employee";
+        }*/
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(String name, Long departmentId) {
-        System.out.println(departmentId);
-        employeeRepository.save(new Employee(name, departmentRepository.findOne(departmentId)));
-        return "redirect:/employee";
+    @ResponseBody
+    public String add(@RequestBody Employee empl) {
+        System.out.println(empl);
+        empl.setDepartment(departmentRepository.findOne(empl.getDepartment().getId()));
+        employeeRepository.save(empl);
+        return "{\"ok\":true}";
     }
 
-
-/*    @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model, Pageable pageable) {
-        model.addAttribute("employees", employeeRepository.findAll(pageable));
-        model.addAttribute("page",pageable.getPageNumber());
-        return "employeeList";
-    }   */
+    /*    @RequestMapping(method = RequestMethod.GET)
+        public String home(Model model, Pageable pageable) {
+            model.addAttribute("employees", employeeRepository.findAll(pageable));
+            model.addAttribute("page",pageable.getPageNumber());
+            return "employeeList";
+        }   */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public Page<Employee> home(Model model, Pageable pageable) {
@@ -84,7 +102,7 @@ public class EmployeeController {
 
     @RequestMapping("/departments")
     @ResponseBody
-    public List<Department> departments(){
+    public List<Department> departments() {
         return departmentRepository.findAll();
     }
 
