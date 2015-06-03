@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
-        return "redirect:/employee";
+        return "home";
     }
 }

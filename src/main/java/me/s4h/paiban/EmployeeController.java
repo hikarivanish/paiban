@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by hikari on 2015/6/2.
  */
@@ -68,12 +70,25 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+/*    @RequestMapping(method = RequestMethod.GET)
     public String home(Model model, Pageable pageable) {
         model.addAttribute("employees", employeeRepository.findAll(pageable));
         model.addAttribute("page",pageable.getPageNumber());
         return "employeeList";
+    }   */
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public Page<Employee> home(Model model, Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
+
+    @RequestMapping("/departments")
+    @ResponseBody
+    public List<Department> departments(){
+        return departmentRepository.findAll();
+    }
+
+
 
 /*    @RequestMapping(value = "/list/{pageStart}/{numPerPage}", method = RequestMethod.GET)
     public String list(Model model, @PathVariable Integer pageStart, @PathVariable Integer numPerPage) {
