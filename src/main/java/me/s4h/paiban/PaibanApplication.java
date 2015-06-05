@@ -41,7 +41,7 @@ class CmdRunner implements CommandLineRunner {
 
         List<Department> ds = departmentRepository.findAll();
         for (int i = 1; i < 100; i++) {
-            employeeRepository.save(new Employee("empl"+random.nextFloat()*100,ds.get(random.nextInt(4))));
+            employeeRepository.save(new Employee("empl" + random.nextFloat() * 100, true, "fdsf" + random.nextFloat() + "@fds.com", random.nextInt(4) + 1L));
         }
 
 

@@ -19,8 +19,10 @@ public class Employee {
 
     private String name;
 
-    @ManyToOne
-    private Department department;
+    private Boolean inSchedule;
+    private String email;
+
+    private Long departmentId;
 
 
     public Long getId() {
@@ -39,17 +41,28 @@ public class Employee {
         this.name = name;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Boolean getInSchedule() {
+        return inSchedule;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setInSchedule(Boolean inSchedule) {
+        this.inSchedule = inSchedule;
     }
 
-    public Employee(String name, Department department) {
-        this.name = name;
-        this.department = department;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -57,8 +70,17 @@ public class Employee {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", department=" + department +
+                ", isInSchedule=" + inSchedule +
+                ", email='" + email + '\'' +
+                ", departmentId=" + departmentId +
                 '}';
+    }
+
+    public Employee(String name, Boolean isInSchedule, String email, Long departmentId) {
+        this.name = name;
+        this.inSchedule = isInSchedule;
+        this.email = email;
+        this.departmentId = departmentId;
     }
 
     public Employee() {
